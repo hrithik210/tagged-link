@@ -1,13 +1,18 @@
 import { PrismaClient } from "@prisma/client"
+import { CreateNextContextOptions } from "@trpc/server/adapters/next"
 
 
 
 
-export const createClient = () => {
+const createClient = () => {
+    return new PrismaClient();
+};
 
-    return new PrismaClient({
-        log :["query"]
-    }).$extends(
-        
-    )
-}
+export const createContext = async(_opts : CreateNextContextOptions) => {
+    return {
+        prisma : createClient(),
+    };
+};
+
+export type Context = Awaited<ReturnType<typeof createContext>>;
+

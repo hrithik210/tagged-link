@@ -18,22 +18,13 @@ model Link {
   notes     String?
   createdAt DateTime @default(now())
 
-  tags LinkTag[]
+  tags Tag[]
 }
 
 model Tag{
   id   Int     @id @default(autoincrement())
   name String  @unique
 
-  links LinkTag[]
+  links Link[]
 }
 
-model LinkTag{
-  linkId Int
-  tagId Int
-
-  link Link @relation(fields: [linkId], references: [id])
-  tag  Tag  @relation(fields: [tagId], references: [id])
-
-  @@id([linkId, tagId])
-}
